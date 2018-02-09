@@ -82,6 +82,8 @@ class Block(pygame.sprite.Sprite):
 # Initialize Pygame
 pygame.init()
 
+img = pygame.image.load('images/RCAG.png')
+
 font = pygame.font.SysFont('Calibri', 25, True, False)
 
 # Set the title of the window
@@ -190,6 +192,7 @@ while not done:
 
     # Put the image of the text on the screen at 250x250
     screen.blit(text, [0, 0])
+    screen.blit(img,(20,310))
     
     # Draw all the spites
     all_sprites_list.draw(screen)
