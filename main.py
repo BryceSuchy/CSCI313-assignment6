@@ -5,13 +5,10 @@ Josh, Callahan, Bryce
 """
 import pygame
 import random
- 
-# Define some colors
-BLACK = (  0,   0,   0)
-WHITE = (255, 255, 255)
-RED   = (255,   0,   0)
-BLUE = (0, 0, 255)
-GREEN = (0, 255, 0)
+import block_library
+import constants
+import goodblock_library
+import badblock_library
 
 class Player(pygame.sprite.Sprite):
     """ The class is the player-controlled sprite. """
@@ -24,7 +21,7 @@ class Player(pygame.sprite.Sprite):
  
         # Set height, width
         self.image = pygame.Surface([15, 15])
-        self.image.fill(BLUE)
+        self.image.fill(constants.BLUE)
  
         # Make our top-left corner the passed-in location.
         self.rect = self.image.get_rect()
@@ -55,30 +52,6 @@ class Player(pygame.sprite.Sprite):
             self.rect.x += self.change_x
             self.rect.y += self.change_y
  
-class Block(pygame.sprite.Sprite):
-    """
-    This class represents the ball.
-    It derives from the "Sprite" class in Pygame.
-    """
- 
-    def __init__(self, color, width, height):
-        """ Constructor. Pass in the color of the block,
-        and its x and y position. """
- 
-        # Call the parent class (Sprite) constructor
-        super().__init__()
- 
-        # Create an image of the block, and fill it with a color.
-        # This could also be an image loaded from the disk.
-        self.image = pygame.Surface([width, height])
-        self.image.fill(color)
- 
-        # Fetch the rectangle object that has the dimensions of the image
-        # image.
-        # Update the position of this object by setting the values
-        # of rect.x and rect.y
-        self.rect = self.image.get_rect()
- 
 # Initialize Pygame
 pygame.init()
 
@@ -90,9 +63,7 @@ font = pygame.font.SysFont('Calibri', 25, True, False)
 pygame.display.set_caption('REALLY COOL AWESOME GAME: LEVEL 1')
  
 # Set the height and width of the screen
-screen_width = 700
-screen_height = 400
-screen = pygame.display.set_mode([screen_width, screen_height])
+screen = pygame.display.set_mode([constants.screen_width, constants.screen_height])
  
 # These are lists of 'good and bad sprites.' Each block in the program is
 # added to these two different lists. The lists are managed by a class called 'Group.'
@@ -102,32 +73,36 @@ bad_block_list = pygame.sprite.Group()
 # This is a list of every sprite. 
 # All blocks and the player block as well.
 all_sprites_list = pygame.sprite.Group()
-
+#goodblock = goodblock_library.GoodBlock(constants.GREEN, 20, 15)
 # good sprites
 for i in range(50):
-    # This represents a block
-    block = Block(GREEN, 20, 15)
- 
-    # Set a random location for the block
-    block.rect.x = random.randrange(screen_width+50)
-    block.rect.y = random.randrange(screen_height)
- 
+    goodblock = goodblock_library.GoodBlock(constants.GREEN, 20, 15)
+    goodblock.rect.x = random.randrange(constants.screen_width)
+    goodblock.rect.y = random.randrange(constants.screen_height)
     # Add the block to the list of objects
-    good_block_list.add(block)
-    all_sprites_list.add(block)
+    good_block_list.add(goodblock)
+    all_sprites_list.add(goodblock)
+
+    badblock = badblock_library.BadBlock(constants.RED, 20, 15)
+    badblock.rect.x = random.randrange(constants.screen_width)
+    badblock.rect.y = random.randrange(constants.screen_height)
+    # Add the block to the list of objects
+    bad_block_list.add(badblock)
+    all_sprites_list.add(badblock)
+
 
 # bad sprites
-for i in range(50):
+#for i in range(50):
     # This represents a block
-    block = Block(RED, 20, 15)
+    
  
     # Set a random location for the block
-    block.rect.x = random.randrange(screen_width)
-    block.rect.y = random.randrange(screen_height)
+    #block.rect.x = random.randrange(constants.screen_width)
+    #block.rect.y = random.randrange(constants.screen_height)
  
     # Add the block to the list of objects
-    bad_block_list.add(block)
-    all_sprites_list.add(block)
+    #bad_block_list.add(block)
+    #all_sprites_list.add(block)
  
 # Create a BLUE player block
 player = Player(20, 15)
@@ -169,10 +144,10 @@ while not done:
                 player.changespeed(0, -3)
     
     # This calls update on all the sprites
-    all_sprites_list.update()
+    #all_sprites_list.update()
        
     # Clear the screen
-    screen.fill(WHITE)
+    screen.fill(constants.WHITE)
  
     # See if the player block has collided with anything.
     good_blocks_hit_list = pygame.sprite.spritecollide(player, good_block_list, True)
@@ -188,7 +163,7 @@ while not done:
         score -= 1
         print("You are the worst player ever")
 
-    text = font.render("Score: " + str(score), True, BLACK)
+    text = font.render("Score: " + str(score), True, constants.BLACK)
 
     # Put the image of the text on the screen at 250x250
     screen.blit(text, [0, 0])
@@ -196,6 +171,7 @@ while not done:
     
     # Draw all the spites
     all_sprites_list.draw(screen)
+    all_sprites_list.update()
  
     # Go ahead and update the screen with what we've drawn.
     pygame.display.flip()
