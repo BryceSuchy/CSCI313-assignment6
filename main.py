@@ -9,6 +9,8 @@ import block_library
 import constants
 import goodblock_library
 import badblock_library
+import music
+import art
 
 class Player(pygame.sprite.Sprite):
     """ The class is the player-controlled sprite. """
@@ -18,11 +20,14 @@ class Player(pygame.sprite.Sprite):
         """Constructor function"""
         # Call the parent's constructor
         super().__init__()
- 
-        # Set height, width
-        self.image = pygame.Surface([15, 15])
-        self.image.fill(constants.BLUE)
- 
+        self.images = []
+        self.images.append(pygame.image.load("images/spaceship/u-spaceship1.png").convert_alpha())
+        self.images.append(pygame.image.load("images/spaceship/u-spaceship2.png").convert_alpha())
+        self.images.append(pygame.image.load("images/spaceship/u-spaceship3.png").convert_alpha())
+        self.images.append(pygame.image.load("images/spaceship/u-spaceship4.png").convert_alpha())
+        self.index = 0
+        self.image = self.images[self.index]
+        
         # Make our top-left corner the passed-in location.
         self.rect = self.image.get_rect()
         self.rect.x = x
@@ -51,6 +56,11 @@ class Player(pygame.sprite.Sprite):
         else:
             self.rect.x += self.change_x
             self.rect.y += self.change_y
+        #iterates through the images, making it look animated
+        self.index += 1
+        if self.index >= len(self.images):
+            self.index = 0
+        self.image = self.images[self.index]
  
 # Initialize Pygame
 pygame.init()
@@ -60,7 +70,7 @@ img = pygame.image.load('images/RCAG.png')
 font = pygame.font.SysFont('Calibri', 25, True, False)
 
 # Set the title of the window
-pygame.display.set_caption('REALLY COOL AWESOME GAME: LEVEL 1')
+pygame.display.set_caption('Quantum Leaper: LEVEL 1')
  
 # Set the height and width of the screen
 screen = pygame.display.set_mode([constants.screen_width, constants.screen_height])
@@ -75,18 +85,35 @@ bad_block_list = pygame.sprite.Group()
 all_sprites_list = pygame.sprite.Group()
 #goodblock = goodblock_library.GoodBlock(constants.GREEN, 20, 15)
 # good sprites
+class GoodSprites(pygame.sprite.Sprite):
+    def __init__(self, x, y):
+        super().__init__()
+        self.image = pygame.image.load("images/goodbad/FuelCell1.png").convert_alpha()
+        self.rect = self.image.get_rect()
+        self.rect.x = random.randrange(constants.screen_width)
+        self.rect.y = random.randrange(constants.screen_height)
+class BadSprites(pygame.sprite.Sprite):
+    def __init__(self, x, y):
+        super().__init__()
+        self.image = pygame.image.load("images/goodbad/astroid.png").convert_alpha()
+        self.rect = self.image.get_rect()
+        self.rect.x = random.randrange(constants.screen_width)
+        self.rect.y = random.randrange(constants.screen_height)
 for i in range(50):
-    goodblock = goodblock_library.GoodBlock(constants.GREEN, 20, 15)
-    goodblock.rect.x = random.randrange(constants.screen_width)
-    goodblock.rect.y = random.randrange(constants.screen_height)
+    #goodblock.image = pygame.image.load("images/goodbad/FuelCell1.png").convert_alpha()
+    #goodblock.rect = goodblock.image.get_rect()
+    #goodblock.rect.x = random.randrange(constants.screen_width)
+    #goodblock.rect.y = random.randrange(constants.screen_height)
     # Add the block to the list of objects
+    goodblock = GoodSprites(0,0)
     good_block_list.add(goodblock)
     all_sprites_list.add(goodblock)
 
-    badblock = badblock_library.BadBlock(constants.RED, 20, 15)
-    badblock.rect.x = random.randrange(constants.screen_width)
-    badblock.rect.y = random.randrange(constants.screen_height)
+    #badblock.image = pygame.image.load("images/goodbad/astroid.png").convert_alpha()
+    #badblock.rect.x = random.randrange(constants.screen_width)
+    #badblock.rect.y = random.randrange(constants.screen_height)
     # Add the block to the list of objects
+    badblock = BadSprites(0,0)
     bad_block_list.add(badblock)
     all_sprites_list.add(badblock)
 
@@ -104,7 +131,7 @@ for i in range(50):
     #bad_block_list.add(block)
     #all_sprites_list.add(block)
  
-# Create a BLUE player block
+# Create a spaceship player block
 player = Player(20, 15)
 all_sprites_list.add(player)
  
@@ -115,6 +142,17 @@ done = False
 clock = pygame.time.Clock()
  
 score = 0
+# extra stuff
+background_sound = pygame.mixer.music.load("sounds/gameMusic.mp3")
+background_sound = pygame.mixer.music.play(loops = 40, start=0.0)
+player_image = pygame.image.load("images/spaceship/u-spaceship1.png").convert()
+astroid_image = pygame.image.load("images/goodbad/astroid.png").convert()
+fuelcell_image = pygame.image.load("images/goodbad/FuelCell1.png").convert()
+font = pygame.font.Font(None , 25)
+fuelsound = pygame.mixer.Sound("sounds/fuelSound.wav")
+astroidsound = pygame.mixer.Sound("sounds/astroidSound.wav")
+
+#
  
 # -------- Main Program Loop -----------
 while not done:
@@ -157,11 +195,13 @@ while not done:
     for block in good_blocks_hit_list:
         score += 1
         print("Nice job man")
+        pygame.mixer.Sound.play(fuelsound)
 
     # Check the list of good collisions.
     for block in bad_blocks_hit_list:
         score -= 1
         print("You are the worst player ever")
+        pygame.mixer.Sound.play(astroidsound)
 
     text = font.render("Score: " + str(score), True, constants.BLACK)
 
