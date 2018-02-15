@@ -21,7 +21,7 @@ class BadBlock(block_library.Block):
             self.counter = 0
             #self.velocity_x = random.randrange(-1, 2)
             self.velocity_y = random.randrange(2)
-        if self.rect.y > constants.screen_height - 15:
+        if self.rect.y > constants.SCREEN_HEIGHT - 15:
             self.rect.y = -5
         else:
             self.rect.y += self.velocity_y
