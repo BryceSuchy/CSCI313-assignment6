@@ -6,6 +6,7 @@ import goodblock_library
 import badblock_library
 import player
 
+
 from level_manager import *
 from screen import *
 
@@ -17,6 +18,8 @@ class GameScreen(Screen):
         self._good_block_list = pygame.sprite.Group()
         self._bad_block_list = pygame.sprite.Group()
         self._all_sprites_list = pygame.sprite.Group()
+        #self._fuelsound = pygame.mixer.Sound("sounds/fuelSound.wav")
+        #self._astroidsound = pygame.mixer.Sound("sounds/astroidSound.wav")
         
         # Create a BLUE player block
         self._player1 = player.Player(20, 15)
@@ -75,11 +78,13 @@ class GameScreen(Screen):
         for block in self._good_blocks_hit_list:
             self._score += 1
             print("Nice job man")
+            #pygame.mixer.Sound.play(self._fuelsound)
 
         # Check the list of good collisions.
         for block in self._bad_blocks_hit_list:
             self._score -= 1
             print("You are the worst player ever")
+            #pygame.mixer.Sound.play(self._astroidsound)
 
 
 

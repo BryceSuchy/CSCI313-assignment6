@@ -16,7 +16,7 @@ clock = pygame.time.Clock()
  
 level_manager = LevelManager()
 level_manager.load_level(TitleScreen())
-
+pygame.display.set_caption('Quantum Leaper: LEVEL 1')
 done = False
 
 # -------- Main Program Loop -----------

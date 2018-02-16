@@ -7,7 +7,7 @@ class GoodBlock(block_library.Block):
     def __init__(self, color, width, height):
         #super.(GoodBlock, self)__init__()
         block_library.Block.__init__(self, color, width, height)
-
+        
         self.velocity_x = random.randrange(-1, 2)
         self.velocity_y = random.randrange(-1, 2)
         self.color = color

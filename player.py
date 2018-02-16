@@ -10,6 +10,14 @@ class Player(pygame.sprite.Sprite):
         """Constructor function"""
         # Call the parent's constructor
         super().__init__()
+
+        self.images = []
+        self.images.append(pygame.image.load("images/spaceship/u-spaceship1.png").convert_alpha())
+        self.images.append(pygame.image.load("images/spaceship/u-spaceship2.png").convert_alpha())
+        self.images.append(pygame.image.load("images/spaceship/u-spaceship3.png").convert_alpha())
+        self.images.append(pygame.image.load("images/spaceship/u-spaceship4.png").convert_alpha())
+        self.index = 0
+        self.image = self.images[self.index]
  
         # Set height, width
         self.image = pygame.Surface([15, 15])
@@ -43,3 +51,9 @@ class Player(pygame.sprite.Sprite):
         else:
             self.rect.x += self.change_x
             self.rect.y += self.change_y
+            
+        #iterates through the images, making it look animated
+        self.index += 1
+        if self.index >= len(self.images):
+            self.index = 0
+        self.image = self.images[self.index]
