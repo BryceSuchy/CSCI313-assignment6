@@ -32,6 +32,7 @@ class Player(pygame.sprite.Sprite):
         # Set speed vector
         self.change_x = 0
         self.change_y = 0
+        self.psuedocounter = 0
  
     def changespeed(self, x, y):
         """ Change the speed of the player"""
@@ -39,6 +40,17 @@ class Player(pygame.sprite.Sprite):
         self.change_y += y
  
     def update(self):
+        ##this creates a fake-ish timer that just iterated the index every 15 frames
+        self.psuedocounter += 1
+        if self.psuedocounter is 15:
+            self.index += 1
+        elif self.psuedocounter is 30:
+            self.index += 1
+        elif self.psuedocounter is 45:
+            self.index += 1
+        elif self.psuedocounter is 60:
+            self.index += 1
+            self.psuedocounter = 0
         """ Find a new position for the player"""
         if self.rect.x > 685:
             self.rect.x = self.rect.x - 1
@@ -53,7 +65,7 @@ class Player(pygame.sprite.Sprite):
             self.rect.y += self.change_y
             
         #iterates through the images, making it look animated
-        self.index += 1
+        #self.index += 1
         if self.index >= len(self.images):
             self.index = 0
         self.image = self.images[self.index]

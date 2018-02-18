@@ -1,6 +1,8 @@
 import block_library
 import constants
 import random
+import pygame
+import time
 
 class GoodBlock(block_library.Block):
 
@@ -14,9 +16,29 @@ class GoodBlock(block_library.Block):
         self.width = width
         self.height = height
         self.counter = 0
+        self.images = []
+        self.images.append(pygame.image.load("images/goodbad/fuelcell1.png").convert_alpha())
+        self.images.append(pygame.image.load("images/goodbad/fuelcell2.png").convert_alpha())
+        self.images.append(pygame.image.load("images/goodbad/fuelcell3.png").convert_alpha())
+        self.images.append(pygame.image.load("images/goodbad/fuelcell4.png").convert_alpha())
+        self.index = 0
+        self.image = self.images[self.index]
+        self.psuedocounter = 0
+        
 
     def update(self):
         block_library.Block.update(self)
+        ##this creates a fake-ish timer that just iterated the index every 15 frames
+        self.psuedocounter += 1
+        if self.psuedocounter is 15:
+            self.index += 1
+        elif self.psuedocounter is 30:
+            self.index += 1
+        elif self.psuedocounter is 45:
+            self.index += 1
+        elif self.psuedocounter is 60:
+            self.index += 1
+            self.psuedocounter = 0
         self.counter += 1
         if self.counter >= 60:  # Every 60 frames.
             self.counter = 0
@@ -24,3 +46,7 @@ class GoodBlock(block_library.Block):
             self.velocity_y = random.randrange(-1, 2)
         self.rect.x += self.velocity_x
         self.rect.y += self.velocity_y
+        #self.index += 1
+        if self.index >= len(self.images):
+            self.index = 0
+        self.image = self.images[self.index]

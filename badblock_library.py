@@ -1,6 +1,7 @@
 import block_library
 import constants
 import random
+import pygame
 
 class BadBlock(block_library.Block):
 
@@ -13,6 +14,7 @@ class BadBlock(block_library.Block):
         self.width = width
         self.height = height
         self.counter = 0
+        self.image = pygame.image.load("images/goodbad/astroid.png").convert_alpha()
 
     def update(self):
         block_library.Block.update(self)
@@ -25,3 +27,5 @@ class BadBlock(block_library.Block):
             self.rect.y = -5
         else:
             self.rect.y += self.velocity_y
+        self.image = pygame.image.load("images/goodbad/astroid.png").convert_alpha()
+        

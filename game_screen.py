@@ -14,6 +14,7 @@ class GameScreen(Screen):
     def __init__(self):
         self._score = 0
         self._font = pygame.font.SysFont('Calibri', 25, True, False)
+        #self.images = pygame.image.load("images/background.png").convert()
         # added to these two different lists. The lists are managed by a class called 'Group.'
         self._good_block_list = pygame.sprite.Group()
         self._bad_block_list = pygame.sprite.Group()
@@ -24,6 +25,7 @@ class GameScreen(Screen):
         # Create a BLUE player block
         self._player1 = player.Player(20, 15)
         self._all_sprites_list.add(self._player1)
+        
         
         #goodblock = goodblock_library.GoodBlock(constants.GREEN, 20, 15)
         # good sprites
@@ -85,6 +87,7 @@ class GameScreen(Screen):
             self._score -= 1
             print("You are the worst player ever")
             #pygame.mixer.Sound.play(self._astroidsound)
+        
 
 
 
@@ -93,5 +96,6 @@ class GameScreen(Screen):
         screen.fill(constants.WHITE)
         self._text = self._font.render("Score: " + str(self._score), True, constants.BLACK)
         screen.blit(self._text, [0, 0])
+        screen.blit(pygame.image.load("images/background.png").convert(),[0,0])
         self._all_sprites_list.draw(screen)
         self._all_sprites_list.update()
