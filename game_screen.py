@@ -95,7 +95,7 @@ class GameScreen(Screen):
         # Clear the screen
         screen.fill(constants.WHITE)
         self._text = self._font.render("Score: " + str(self._score), True, constants.BLACK)
-        screen.blit(self._text, [0, 0])
         screen.blit(pygame.image.load("images/background.png").convert(),[0,0])
+        screen.blit(self._text, [0, 0])
         self._all_sprites_list.draw(screen)
         self._all_sprites_list.update()
