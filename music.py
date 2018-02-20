@@ -9,6 +9,7 @@ class MusicClass():
         self._titlemusic = pygame.mixer.Sound("sounds/titleScreenMusic.wav")
         self._gamemusic = pygame.mixer.Sound("sounds/gameMusic.wav")
         self._creditmusic = pygame.mixer.Sound("sounds/creditScreenMusic.wav")
+        self._boundary_sound = pygame.mixer.Sound("sounds/deathSound.wav")
     def play_once(self, soundstring):
         if (soundstring == "fuelsound"):
             self._fuelsound.play()
@@ -22,6 +23,9 @@ class MusicClass():
             self._gamemusic.play()
         elif (soundstring == "creditmusic"):
             self._creditmusic.play()
+        elif (soundstring == "boundary_sound"):
+            self._boundary_sound.set_volume(150)
+            self._boundary_sound.play()
         else:
             print("That's not a valid identifier")
         pass

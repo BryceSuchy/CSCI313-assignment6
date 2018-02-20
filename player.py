@@ -2,6 +2,9 @@ import pygame
 import random
 import constants
 
+from music import *
+from art import *
+
 class Player(pygame.sprite.Sprite):
     """ The class is the player-controlled sprite. """
  
@@ -12,10 +15,10 @@ class Player(pygame.sprite.Sprite):
         super().__init__()
 
         self.images = []
-        self.images.append(pygame.image.load("images/spaceship/u-spaceship1.png").convert_alpha())
-        self.images.append(pygame.image.load("images/spaceship/u-spaceship2.png").convert_alpha())
-        self.images.append(pygame.image.load("images/spaceship/u-spaceship3.png").convert_alpha())
-        self.images.append(pygame.image.load("images/spaceship/u-spaceship4.png").convert_alpha())
+        self.images.append(Art().get_image("spaceship/u-spaceship1.png"))
+        self.images.append(Art().get_image("spaceship/u-spaceship2.png"))
+        self.images.append(Art().get_image("spaceship/u-spaceship3.png"))
+        self.images.append(Art().get_image("spaceship/u-spaceship4.png"))
         self.index = 0
         self.image = self.images[self.index]
  
@@ -53,12 +56,16 @@ class Player(pygame.sprite.Sprite):
             self.psuedocounter = 0
         """ Find a new position for the player"""
         if self.rect.x > 685:
+            MusicClass().play_once("boundary_sound")
             self.rect.x = self.rect.x - 1
         elif self.rect.y > 385:
+            MusicClass().play_once("boundary_sound")
             self.rect.y = self.rect.y - 1
         elif self.rect.x < 0:
+            MusicClass().play_once("boundary_sound")
             self.rect.x = self.rect.x + 1
         elif self.rect.y < 0:
+            MusicClass().play_once("boundary_sound")
             self.rect.y = self.rect.y + 1
         else:
             self.rect.x += self.change_x

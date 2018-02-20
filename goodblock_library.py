@@ -4,6 +4,8 @@ import random
 import pygame
 import time
 
+from art import *
+
 class GoodBlock(block_library.Block):
 
     def __init__(self, color, width, height):
@@ -17,10 +19,10 @@ class GoodBlock(block_library.Block):
         self.height = height
         self.counter = 0
         self.images = []
-        self.images.append(pygame.image.load("images/goodbad/fuelcell1.png").convert_alpha())
-        self.images.append(pygame.image.load("images/goodbad/fuelcell2.png").convert_alpha())
-        self.images.append(pygame.image.load("images/goodbad/fuelcell3.png").convert_alpha())
-        self.images.append(pygame.image.load("images/goodbad/fuelcell4.png").convert_alpha())
+        self.images.append(Art().get_image("goodbad/fuelcell1.png"))
+        self.images.append(Art().get_image("goodbad/fuelcell2.png"))
+        self.images.append(Art().get_image("goodbad/fuelcell3.png"))
+        self.images.append(Art().get_image("goodbad/fuelcell4.png"))
         self.index = 0
         self.image = self.images[self.index]
         self.psuedocounter = 0

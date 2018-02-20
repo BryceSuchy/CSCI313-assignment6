@@ -16,7 +16,7 @@ class BadBlock(block_library.Block):
         self.height = height
         self.counter = 0
         #self.image = Art().get_image("astroid")
-        self.image = pygame.image.load("images/goodbad/astroid.png").convert_alpha()
+        self.image = Art().get_image("goodbad/astroid.png")
 
 
     def update(self):
@@ -31,5 +31,4 @@ class BadBlock(block_library.Block):
         else:
             self.rect.y += self.velocity_y
         #self.image = Art().get_image("astroid")
-        self.image = pygame.image.load("images/goodbad/astroid.png").convert_alpha()
-        
+        self.image = self.image 

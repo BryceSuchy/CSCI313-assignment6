@@ -55,6 +55,9 @@ class GameScreen(Screen):
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_ESCAPE:
                 MusicClass().stop_repeat("gamemusic")
+                pygame.mixer.quit()
+                pygame.mixer.init()
+                MusicClass().play_repeat("titlemusic")
                 LevelManager().leave_level()
             # Set the speed based on the key pressed
             elif event.key == pygame.K_LEFT:
@@ -99,7 +102,7 @@ class GameScreen(Screen):
         # Clear the screen
         screen.fill(constants.WHITE)
         self._text = self._font.render("Score: " + str(self._score), True, constants.BLACK)
-        screen.blit(pygame.image.load("images/background.png").convert(),[0,0])
+        screen.blit(Art().get_image("background.png"),[0,0])
         screen.blit(self._text, [0, 0])
         self._all_sprites_list.draw(screen)
         self._all_sprites_list.update()
