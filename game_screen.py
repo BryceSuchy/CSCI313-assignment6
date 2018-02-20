@@ -9,9 +9,13 @@ import player
 
 from level_manager import *
 from screen import *
+from music import *
+from art import *
 
 class GameScreen(Screen):
     def __init__(self):
+        pygame.mixer.quit()
+        pygame.mixer.init()
         self._score = 0
         self._font = pygame.font.SysFont('Calibri', 25, True, False)
         #self.images = pygame.image.load("images/background.png").convert()
@@ -25,6 +29,7 @@ class GameScreen(Screen):
         # Create a BLUE player block
         self._player1 = player.Player(20, 15)
         self._all_sprites_list.add(self._player1)
+        MusicClass().play_repeat("gamemusic")
         
         
         #goodblock = goodblock_library.GoodBlock(constants.GREEN, 20, 15)
@@ -49,6 +54,7 @@ class GameScreen(Screen):
     def handle_keyboard_event(self, event):
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_ESCAPE:
+                MusicClass().stop_repeat("gamemusic")
                 LevelManager().leave_level()
             # Set the speed based on the key pressed
             elif event.key == pygame.K_LEFT:
@@ -80,15 +86,13 @@ class GameScreen(Screen):
         for block in self._good_blocks_hit_list:
             self._score += 1
             print("Nice job man")
-            #pygame.mixer.Sound.play(self._fuelsound)
+            MusicClass().play_once("fuelsound")
 
         # Check the list of good collisions.
         for block in self._bad_blocks_hit_list:
             self._score -= 1
             print("You are the worst player ever")
-            #pygame.mixer.Sound.play(self._astroidsound)
-        
-
+            MusicClass().play_once("astroidsound")
 
 
     def draw(self, screen):

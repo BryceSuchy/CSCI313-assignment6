@@ -3,6 +3,7 @@
 import constants
 from level_manager import *
 from title_screen import *
+from music import *
 
 import pygame
  
@@ -31,8 +32,9 @@ while not done:
     #Update and Draw are very common delinations in game logic
     #Update is involved in changing game state
     #Draw simply draws objects on the screen
-    current_level.update()
     current_level.draw(screen)
+    current_level.update()
+    
  
     # Update the screen with what we've drawn.
     pygame.display.flip()
