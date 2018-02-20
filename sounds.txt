@@ -1,0 +1,9 @@
+sounds/astroid.wav
+sounds/creditScreenMusic.wav
+sounds/creditScreenMusic.wav
+sounds/deathSound.wav
+sounds/fuelSound.wav
+sounds/gameMusic.wav
+sounds/gmaeMusic.wav
+sounds/titleScreenMusic.wav
+sounds/titleScreenMusic.wav

@@ -1,0 +1,13 @@
+goodbad/astroid.png,2
+goodbad/FuelCell1.png,1
+goodbad/FuelCell2.png,1
+goodbad/FuelCell3.png,1
+goodbad/FuelCell4.png,1
+spaceship/u-spaceship1.png,0
+spaceship/u-spaceship2.png,0
+spaceship/u-spaceship3.png,0
+spaceship/u-spaceship4.png,0
+background.png
+credit.png
+title.png
+titlescreen.png
